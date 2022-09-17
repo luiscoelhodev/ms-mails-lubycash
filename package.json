@@ -1,0 +1,19 @@
+{
+  "name": "ms-mail-lubycash",
+  "version": "1.0.0",
+  "description": "Lubycash's microservice responsible for sending emails to users.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "ts-node-dev --respawn --transpile-only main.ts",
+    "build": "npx tsc -b",
+    "start": "node index.js"
+  },
+  "author": "Luis Coelho",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^18.7.18",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^4.8.3"
+  }
+}
