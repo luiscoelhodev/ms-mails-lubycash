@@ -2,7 +2,7 @@ import { Kafka } from "kafkajs"
 
 const kafka = new Kafka({
   clientId: 'ms-mails-lubycash',
-  brokers: ['kafka:9091'],
+  brokers: ['localhost:9092'],
 })
 
 enum TopicEnum {
