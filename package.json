@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "npx ts-node-dev --respawn --transpile-only ./src/index.ts",
+    "mock-consumer": "npx ts-node-dev --respawn --transpile-only ./mock/kafkaConsumer",
     "build": "npx tsc -b",
     "start": "node index.js"
   },
