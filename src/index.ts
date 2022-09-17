@@ -1,0 +1,1 @@
+console.log('Hello, ms-mails project!')
