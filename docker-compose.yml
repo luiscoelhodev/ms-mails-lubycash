@@ -1,0 +1,64 @@
+version: "3"
+networks:
+  lubycash:
+    external: true
+
+services:
+  ms-mails-lubycash:
+    build:
+      context: .
+    environment:
+      SMTP_HOST: smtp.mailtrap.io
+      SMTP_PORT: 2525
+      SMTP_USER: 56846780935474
+      SMTP_PASSWORD: faf1214938dde1
+    ports:
+      - '8080:8080'
+    depends_on:
+      - kafka
+    networks:
+      - lubycash
+    
+  zookeeper:
+    image: zookeeper:3.4.9
+    ports:
+      - "2181:2181"
+    environment:
+      ZOO_MY_ID: 1
+      ZOO_PORT: 2181
+      ZOO_SERVERS: server.1=zookeeper:2888:3888
+    volumes:
+      - ./data/zookeeper/data:/data
+      - ./data/zookeeper/datalog:/datalog
+    networks:
+      - lubycash
+
+  kafka:
+    image: confluentinc/cp-kafka:5.3.0
+    ports:
+      - "9091:9091"
+    environment:
+      KAFKA_ADVERTISED_LISTENERS: LISTENER_DOCKER_INTERNAL://kafka:19091,LISTENER_DOCKER_EXTERNAL://kafka:9091
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: LISTENER_DOCKER_INTERNAL:PLAINTEXT,LISTENER_DOCKER_EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: LISTENER_DOCKER_INTERNAL
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
+      KAFKA_BROKER_ID: 1
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_DELETE_TOPIC_ENABLE: "true" 
+    networks:
+      - lubycash
+    depends_on:
+      - zookeeper
+  kafdrop:
+    image: obsidiandynamics/kafdrop
+    hostname: kafdrop
+    container_name: kafdrop
+    restart: "no"
+    ports:
+      - "9000:9000"
+    environment:
+      KAFKA_BROKERCONNECT: "kafka:19091"
+    networks:
+      - lubycash
+    depends_on:
+      - kafka
