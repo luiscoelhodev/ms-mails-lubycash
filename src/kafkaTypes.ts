@@ -17,4 +17,10 @@ type User = {
   updatedAt: DateTime
 }
 
-export { MessageFromAdonisProducer, User }
+enum SubjectEnum {
+  token = `Here's your token`,
+  accepted = 'Hello, new Lubycash customer!',
+  rejected = `We're sorry...`
+}
+
+export { MessageFromAdonisProducer, User, SubjectEnum }

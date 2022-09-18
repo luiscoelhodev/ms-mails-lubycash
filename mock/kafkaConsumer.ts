@@ -1,5 +1,6 @@
 import { kafka, TopicEnum } from '../src/kafkaConnector'
-import { MessageFromAdonisProducer } from '../src/kafkaTypes'
+import { MessageFromAdonisProducer, SubjectEnum } from '../src/kafkaTypes'
+import { sendMail } from '../src/sendMail'
 
 async function myMSMockConsumer() {
   const consumer = kafka.consumer({ groupId: 'ms-group' })
@@ -11,7 +12,7 @@ async function myMSMockConsumer() {
   await consumer.run({
     eachMessage: async ({ message }) => {
       const messageData: MessageFromAdonisProducer = JSON.parse(message.value!.toString())
-      console.log(messageData)
+      await sendMail(messageData.user, SubjectEnum.token, messageData.token)
     },
   })
 }
