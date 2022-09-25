@@ -1,8 +1,13 @@
 import { DateTime } from "luxon"
 
-type MessageFromAdonisProducer = {
+type TokenMessageFromAdonisProducer = {
   user: User,
   token: string
+}
+
+type ValidationMessageFromAdonisProducer = {
+  user: User,
+  result: string
 }
 
 type User = {
@@ -23,4 +28,4 @@ enum SubjectEnum {
   rejected = `We're sorry...`
 }
 
-export { MessageFromAdonisProducer, User, SubjectEnum }
+export { TokenMessageFromAdonisProducer, User, SubjectEnum, ValidationMessageFromAdonisProducer }
