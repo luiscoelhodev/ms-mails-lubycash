@@ -19,6 +19,7 @@ services:
       - kafka
     networks:
       - lubycash
+    restart: unless-stopped
     
   zookeeper:
     image: zookeeper:3.4.9
